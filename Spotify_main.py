@@ -90,15 +90,12 @@ def save_discover_weekly():
 
     # Filter out songs that are already in the Saved Weekly playlist
     new_song_uris = [uri for uri in discover_weekly_song_uris if uri not in saved_weekly_song_uris]  # Highlighted Change
-
     # Add new songs to the Saved Weekly playlist
     if new_song_uris:  # Highlighted Change
         sp.user_playlist_add_tracks(user_id, saved_weekly_playlist_id, new_song_uris, None)  # Highlighted Change
         return 'Discover Weekly songs added'
     else:
         return 'No new songs to add'  # Highlighted Change
-
-    return 'Discover Weekly songs added'
 
 # function to get the token info from the session
 def get_token():

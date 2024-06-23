@@ -67,6 +67,7 @@ def save_discover_weekly():
         return 'Discover Weekly playlist not found'
 
     discover_weekly_playlist = sp.playlist_items(discover_weekly_playlist_id)
+    discover_weekly_song_uris = [song['track']['uri'] for song in discover_weekly_playlist['items']]  # Highlighted Change
     song_uris = [song['track']['uri'] for song in discover_weekly_playlist['items']]
 
     # Retrieve all user playlists and print their names

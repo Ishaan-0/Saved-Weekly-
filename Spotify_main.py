@@ -84,7 +84,19 @@ def save_discover_weekly():
         new_playlist = sp.user_playlist_create(user_id, 'Saved Weekly', True)
         saved_weekly_playlist_id = new_playlist['id']
 
-    sp.user_playlist_add_tracks(user_id, saved_weekly_playlist_id, song_uris, None)
+    # Get the current songs in the Saved Weekly playlist
+    saved_weekly_playlist_tracks = sp.playlist_items(saved_weekly_playlist_id)  # Highlighted Change
+    saved_weekly_song_uris = [song['track']['uri'] for song in saved_weekly_playlist_tracks['items']]  # Highlighted Change
+
+    # Filter out songs that are already in the Saved Weekly playlist
+    new_song_uris = [uri for uri in discover_weekly_song_uris if uri not in saved_weekly_song_uris]  # Highlighted Change
+
+    # Add new songs to the Saved Weekly playlist
+    if new_song_uris:  # Highlighted Change
+        sp.user_playlist_add_tracks(user_id, saved_weekly_playlist_id, new_song_uris, None)  # Highlighted Change
+        return 'Discover Weekly songs added'
+    else:
+        return 'No new songs to add'  # Highlighted Change
 
     return 'Discover Weekly songs added'
 
